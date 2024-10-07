@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 20px;
+        }
+        
+        h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        
+        .nav {
+            display: flex;
+            justify-content: flex-end; 
+            margin-bottom: 20px;
+        }
+        
+        a {
+            margin: 0 15px;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            background-color: #4CAF50;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        a:hover {
+            background-color: #45a049;
+        }
+        
+        button {
+            margin: 0 15px; 
+            padding: 10px 20px; 
+            background-color: #4CAF50; 
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s; 
+        }
+        
+        button:hover {
+            background-color: #45a049;
+        }
+        
+        hr {
+            border: 0;
+            height: 1px;
+            background: #ddd;
+            margin: 20px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        thead {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            font-weight: bold;
+        }
+        
+        tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+        
+        tfoot {
+            background-color: #f4f4f4;
+            font-weight: bold;
+        }
+        
+        tfoot td {
+            text-align: center;
+            padding: 10px;
+        }
+        
+        a#show-title {
+            background-color: transparent; 
+            color: #007BFF; 
+            text-decoration: none; 
+            transition: color 0.3s; 
+        }
+        
+        a#show-title:hover {
+            text-decoration: underline; 
+            color: #0056b3;
+        }
+        
+    </style>
+</head>
+<body>
+    <h1>Welcome to your NETFIX,  {{user.first_name}} {{user.last_name}}</h1>
+    <div class="nav">
+        <a href="{% url 'create_show_page' %}">+Create</a>
+        <form method="post" action="{% url 'sign_out' %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit">Sign Out</button>
+        </form>
+        
+        
+    </div>
+    
+    <hr>
+
+    <h1>All TV Shows:</h1>
+    <table>
+        <thead>
+            <tr>
+                <td>Title</td>
+                <td>Network</td>
+                <td>Release Date</td>
+                <td>More</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for show in shows %}
+            <tr>
+                <td><a href="{% url 'show_details' show.id %}" id="show-title">{{ show.title }}</a></td>
+                <td>{{ show.network }}</td>
+                <td>{{ show.release_date }}</td>
+                <td><a href="{%url 'update_show' show.id %}" style="background-color:#C4A484;">Edit</a>|<a href="{%url 'delete_show' show.id%}" style="background-color:red;">Delete</a></td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No shows available.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4">TV Show Table</td>
+            </tr>
+        </tfoot>
+    </table>
+
+</body>
+</html>
