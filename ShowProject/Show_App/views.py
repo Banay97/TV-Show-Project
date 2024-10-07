@@ -148,5 +148,5 @@ def delete_show(request, show_id):
         show.delete()
         messages.success(request, 'Show deleted successfully!')
         return redirect('home_page')
-    
+    return redirect('home_page') 
     

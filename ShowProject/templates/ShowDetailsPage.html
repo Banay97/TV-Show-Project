@@ -71,7 +71,7 @@
         }
 
         h3 {
-            color: red;
+            color: black;
             margin-bottom: 15px;
         }
 
@@ -112,12 +112,11 @@
     <hr>
 
     <div class="card">
-        <h1>Recommend a New Show</h1>
-        <h3>Please provide a comment</h3>
+        
         <form method= "post" action ="{% url 'create_show' %}">
             {%csrf_token%}
-            <label for="title">Title:</label>
-            <p name="title">{{show.title}}</p>
+            <h1>{{show.title}}</h1>
+            <h3>Recommended By: {{user.first_name}} {{user.last_name}}</h3>
 
             <label for="network">Network:</label>
             <p name="network">{{show.network}}</p>

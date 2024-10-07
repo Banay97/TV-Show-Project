@@ -76,18 +76,14 @@ class Show(models.Model):
     release_date = models.DateField()
     created_at = models.DateTimeField(auto_now_add=True)  
     updated_at = models.DateTimeField(auto_now=True)
-
-    objects = ShowManager()      
+    objects = ShowManager()
 
     def __str__(self):
         return f"{self.title} ({self.network})"
     
 
-class Comment(models.Model):
-    context = models.CharField(max_length=255)
-    created_at = models.DateTimeField(auto_now_add=True)  
-    updated_at = models.DateTimeField(auto_now=True)
-    user = 
+
+    
         
     
         

@@ -138,7 +138,13 @@
                 <td><a href="{% url 'show_details' show.id %}" id="show-title">{{ show.title }}</a></td>
                 <td>{{ show.network }}</td>
                 <td>{{ show.release_date }}</td>
-                <td><a href="{%url 'update_show' show.id %}" style="background-color:#C4A484;">Edit</a>|<a href="{%url 'delete_show' show.id%}" style="background-color:red;">Delete</a></td>
+                <td>
+                    <a href="{% url 'update_show' show.id %}" style="background-color: #C4A484;">Edit</a> |
+                    <form method="post" action="{% url 'delete_show' show.id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" style="background-color: red; color: white; border: none; cursor: pointer;">Delete</button>
+                    </form>
+                </td>
             </tr>
             {% empty %}
             <tr>
