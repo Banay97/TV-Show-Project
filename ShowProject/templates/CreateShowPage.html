@@ -96,11 +96,17 @@
         textarea {
             resize: vertical; 
         }
+        .messages {
+            color: red;
+            margin-top: 10px;
+            list-style-type: none;
+            padding: 0;
+        }
 
     </style>
 </head>
 <body>
-    <h1>Welcome to your NETFIX,  {{user.first_name}} {{user.last_name}}</h1>
+    <h1>Welcome to your NETFIX, {{user.first_name}} {{user.last_name}}</h1>
     <div class="nav">
         <a href="{% url 'home_page' %}">TV Shows</a>
         <form method="post" action="{% url 'sign_out' %}" style="display:inline;">
@@ -131,13 +137,11 @@
             <button type="submit">Add</button>
         </form>
         {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                {% if message.tags == "create_show" %}
+            <ul class="messages">
+                {% for message in messages %}
                     <li class="{{ message.tags }}">{{ message }}</li>
-                {% endif %}
-            {% endfor %}
-        </ul>
+                {% endfor %}
+            </ul>
         {% endif %}
     </div>
 </body>

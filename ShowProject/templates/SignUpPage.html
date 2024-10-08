@@ -109,14 +109,12 @@
         </form>
 
         {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                {% if message.tags == "signup" %}
+            <ul class="messages">
+                {% for message in messages %}
                     <li class="{{ message.tags }}">{{ message }}</li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-    {% endif %}
+                {% endfor %}
+            </ul>
+        {% endif %}
     </div>
 
 </body>

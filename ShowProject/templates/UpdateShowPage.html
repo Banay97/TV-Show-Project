@@ -96,6 +96,12 @@
         textarea {
             resize: vertical; 
         }
+        .messages {
+            color: red;
+            margin-top: 10px;
+            list-style-type: none;
+            padding: 0;
+        }
 
     </style>
 </head>
@@ -131,13 +137,11 @@
             <button type="submit">Update</button>
         </form>
         {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                {% if message.tags == "update_show" %}
+            <ul class="messages">
+                {% for message in messages %}
                     <li class="{{ message.tags }}">{{ message }}</li>
-                {% endif %}
-            {% endfor %}
-        </ul>
+                {% endfor %}
+            </ul>
         {% endif %}
     </div>
     

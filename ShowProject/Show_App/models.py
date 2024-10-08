@@ -33,13 +33,13 @@ class ShowManager(models.Manager):
         errors = {}
         
         # Title validation
-        if len(postData['title']) < 2: 
+        if len(postData['title']) < 3: 
             errors['title'] = "Show title should be more than 2 characters."
         elif show_id and Show.objects.exclude(id=show_id).filter(title=postData['title']).exists():
             errors['title'] = "Show title must be unique."
 
         # Network validation
-        if len(postData['network']) < 2:
+        if len(postData['network']) < 3:
             errors['network'] = "Show network should be more than 2 characters."
 
         # Release date validation

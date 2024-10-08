@@ -67,11 +67,14 @@ def sign_out(request):
 
 #-- rendering function for create show page
 def create_show_page(request):
-    return render(request, 'CreateShowPage.html')
+    user_id = request.session.get('user_id')
+    user =User.objects.get(id=user_id)
+    return render(request, 'CreateShowPage.html', {'user':user})
 
 #-- Create Show Function according to the owner of the account 
 def create_show(request):
     if request.method == 'POST':
+        user = None 
         errors = Show.objects.show_validator(request.POST)  
         if errors:
             for key, value in errors.items():
@@ -91,13 +94,15 @@ def create_show(request):
             messages.error(request, 'You must be logged in to create a show.')
             return redirect('sign_in')
 
-        user = User.objects.get(id=request.session['user_id'])  
+        user = User.objects.get(id=request.session['user_id']) 
         
         show = Show.objects.create(title=title, network=network, release_date=release_date, comment=comment, created_by=user )
         show.save() 
         messages.success(request, 'Show created successfully!')
-        return redirect('home_page') 
-    return render(request, 'HomePage.html', {'show': {}})
+        return redirect('home_page')
+    
+    user = User.objects.get(id=request.session['user_id']) 
+    return render(request, 'CreateShowPage.html', {'show': {}, 'user':user})
 
 
 #--Update Show Function 
