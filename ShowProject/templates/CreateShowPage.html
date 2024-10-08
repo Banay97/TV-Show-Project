@@ -130,6 +130,15 @@
 
             <button type="submit">Add</button>
         </form>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                {% if message.tags == "create_show" %}
+                    <li class="{{ message.tags }}">{{ message }}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        {% endif %}
     </div>
 </body>
 </html>

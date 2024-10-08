@@ -139,11 +139,15 @@
                 <td>{{ show.network }}</td>
                 <td>{{ show.release_date }}</td>
                 <td>
-                    <a href="{% url 'update_show' show.id %}" style="background-color: #C4A484;">Edit</a> |
-                    <form method="post" action="{% url 'delete_show' show.id %}" style="display:inline;">
-                        {% csrf_token %}
-                        <button type="submit" style="background-color: red; color: white; border: none; cursor: pointer;">Delete</button>
-                    </form>
+                    {% if user and show.created_by.id == user.id %}
+                        <a href="{% url 'update_show' show.id %}" style="background-color: #C4A484;">Edit</a> |
+                        <form method="post" action="{% url 'delete_show' show.id %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" style="background-color: red; color: white; border: none; cursor: pointer;">Delete</button>
+                        </form>
+                    {% else %}
+                        <a href="{% url 'show_details' show.id %}" style="background-color: #C4A484;">Details</a>
+                    {% endif %}
                 </td>
             </tr>
             {% empty %}

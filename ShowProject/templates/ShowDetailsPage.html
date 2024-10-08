@@ -116,7 +116,7 @@
         <form method= "post" action ="{% url 'create_show' %}">
             {%csrf_token%}
             <h1>{{show.title}}</h1>
-            <h3>Recommended By: {{user.first_name}} {{user.last_name}}</h3>
+            <h3>Recommended By: {{ show.created_by.first_name }} {{ show.created_by.last_name }}</h3>
 
             <label for="network">Network:</label>
             <p name="network">{{show.network}}</p>
@@ -129,13 +129,41 @@
 
         </form>
     </div>
-    <div>
-        <label for="comment">Post a comment:</label>
-        <input type="text" id="comment" name="comment" required>
-    </div>
-    <div class='"display-comments'>
-        <h4>{{user.first_name}} {{user.last_name}}</h4> <p> at {{comment.created_at}}
+    <form method="POST" action="{% url 'create_comment' show.id %}">
+        {% csrf_token %}
+        <div>
+            <label for="comment">Post a comment:</label>
+            <input type="text" id="comment" name="content" required>
+            <button type="submit">Submit</button>
+        </div>
+    </form>
 
+    <div class="display-comments">
+        {% for comment in show.showcomment_set.all %}
+        <div class="comment">
+        <h4>{{ comment.user.first_name }} {{ comment.user.last_name }} at {{ comment.created_at|date:"F j, Y, g:i a" }}</h4>
+        <p>{{ comment.content }}</p>
+
+        {% if user.id == comment.user.id %}
+            <form method="post" action="{% url 'delete_comment' comment.id %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" style="background-color: red; color: white; border: none; cursor: pointer;">Delete</button>
+            </form>
+        {% endif %}
+        </div>
+        {% empty %}
+            <p>No comments yet.</p>
+        {% endfor %}
+
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                {% if message.tags == "comment" %}
+                    <li class="{{ message.tags }}">{{ message }}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        {% endif %}
     </div>
 </body>
 </html>
